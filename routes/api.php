@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/posts/{post}', [PostController::class, 'show'])
+    ->name('show_post');
+Route::get('/posts/{post}/comments', [CommentController::class, 'postComments'])
+    ->name('show_post_comments');
+
+Route::post('/posts/{post}/comment', [CommentController::class, 'commentToPost'])
+    ->name('save_post_comment');
+Route::post('/comments/{comment}/comment', [CommentController::class, 'commentToComment'])
+    ->name('save_comment_comment');
